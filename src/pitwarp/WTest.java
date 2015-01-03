@@ -5,9 +5,18 @@
  */
 package pitwarp;
 
-import java.awt.*;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
+import java.awt.Color;
+import java.awt.Event;
+import java.awt.FileDialog;
+import java.awt.Frame;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Label;
+import java.awt.Menu;
+import java.awt.MenuBar;
+import java.awt.Point;
+import java.awt.Toolkit;
+import java.awt.Window;
 
 public class WTest extends Frame
 {
@@ -31,10 +40,10 @@ public class WTest extends Frame
         show();
     }
 
-    private JMenuBar createMenuBar()
+    private MenuBar createMenuBar()
     {
-        JMenuBar bar = new JMenuBar();
-        JMenu m = new JMenu("Image");
+        MenuBar bar = new MenuBar();
+        Menu m = new Menu("Image");
         m.add("Load");
         m.add("Swap");
         bar.add(m);

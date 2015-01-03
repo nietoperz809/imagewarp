@@ -9,6 +9,10 @@ import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Image;
 
+/**
+ *
+ * @author Administrator
+ */
 public class ImageView extends Canvas
 {
     Image m_img = null;
@@ -34,6 +38,10 @@ public class ImageView extends Canvas
         g.drawRect(0, 0, xe - 1, ye - 1);
     }
 
+    /**
+     *
+     * @param img
+     */
     public void setImage(Image img)
     {
         if (m_img != null)
@@ -44,6 +52,10 @@ public class ImageView extends Canvas
         repaint();
     }
 
+    /**
+     *
+     * @param iv
+     */
     public void swapImage(ImageView iv)
     {
         if (iv != this)

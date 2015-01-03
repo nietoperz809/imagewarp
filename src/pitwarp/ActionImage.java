@@ -9,7 +9,7 @@ import java.awt.Color;
 import java.awt.Event;
 import java.awt.Graphics;
 
-class ActionImage extends ImageView
+public class ActionImage extends ImageView
 {
     int m_x;
     int m_y;
@@ -43,14 +43,14 @@ class ActionImage extends ImageView
                 break;
             case Event.MOUSE_UP:
                 repaint();
-                float yb = (float) m_img.getHeight(this);
-                float xb = (float) m_img.getWidth(this);
-                float ys = (float) size().height;
-                float xs = (float) size().width;
-                float xb1 = xb * (float) m_x / xs;
-                float yb1 = yb * (float) m_y / ys;
-                float xb2 = xb * (float) evt.x / xs;
-                float yb2 = yb * (float) evt.y / ys;
+                float yb = m_img.getHeight(this);
+                float xb = m_img.getWidth(this);
+                float ys = size().height;
+                float xs = size().width;
+                float xb1 = xb * m_x / xs;
+                float yb1 = yb * m_y / ys;
+                float xb2 = xb * evt.x / xs;
+                float yb2 = yb * evt.y / ys;
                 getParent().postEvent(new Event(this, 0, Event.ACTION_EVENT, (int) xb2, (int) yb2, (int) xb1, (int) yb1, this));
                 break;
         }
