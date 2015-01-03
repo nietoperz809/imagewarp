@@ -9,7 +9,7 @@ import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Image;
 
-class ImageView extends Canvas
+public class ImageView extends Canvas
 {
     Image m_img = null;
 

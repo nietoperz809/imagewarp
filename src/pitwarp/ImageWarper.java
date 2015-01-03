@@ -30,7 +30,7 @@ class ImageWarper
     }
 
     // warp mFromPixels into mToPixels
-    Image WarpPixels(Component obs, Image img, Point fromPoint, Point toPoint)
+    public Image WarpPixels(Component obs, Image img, Point fromPoint, Point toPoint)
     {
         mFromPoint = fromPoint;
         mToPoint = toPoint;
@@ -122,7 +122,7 @@ class ImageWarper
     }
 
     // warp a quadrilateral into a rectangle (magic!)
-    void WarpRegion(Rectangle fromRect, Point nw, Point ne, Point sw, Point se)
+    private void WarpRegion(Rectangle fromRect, Point nw, Point ne, Point sw, Point se)
     {
         int dx = fromRect.width;
         int dy = fromRect.height;

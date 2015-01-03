@@ -6,7 +6,8 @@
 package pitwarp;
 
 import java.awt.*;
-import java.awt.image.*;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
 
 public class WTest extends Frame
 {
@@ -30,10 +31,10 @@ public class WTest extends Frame
         show();
     }
 
-    private MenuBar createMenuBar()
+    private JMenuBar createMenuBar()
     {
-        MenuBar bar = new MenuBar();
-        Menu m = new Menu("Image");
+        JMenuBar bar = new JMenuBar();
+        JMenu m = new JMenu("Image");
         m.add("Load");
         m.add("Swap");
         bar.add(m);
