@@ -19,10 +19,10 @@ public class WTest extends Frame
     ImageView imageView = new ImageView();
     Toolkit toolkit = Toolkit.getDefaultToolkit();
 
-    WTest()
+    public WTest()
     {
         setLayout(new GridLayout(1, 1));
-        setMenuBar(new WTMenu());
+        setMenuBar(createMenuBar());
         add(actionImage);
         add(imageView);
         actionImage.setImage(toolkit.getImage("bump.gif"));
@@ -30,6 +30,16 @@ public class WTest extends Frame
         show();
     }
 
+    private MenuBar createMenuBar()
+    {
+        MenuBar bar = new MenuBar();
+        Menu m = new Menu("Image");
+        m.add("Load");
+        m.add("Swap");
+        bar.add(m);
+        return bar;
+    }
+    
     @Override
     public boolean handleEvent(Event evt)
     {
@@ -79,11 +89,3 @@ public class WTest extends Frame
         return true;
     }
 }
-
-////////////////////////////////////////////////////////////////////////
-
-////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////
-
-/////////////////////////////////////////////////////////////////////////
