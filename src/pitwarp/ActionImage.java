@@ -35,16 +35,18 @@ public class ActionImage extends ImageView
                 m_oldx = m_x;
                 m_oldy = m_y;
                 break;
+                
             case Event.MOUSE_DRAG:
                 g.drawLine(m_x, m_y, m_oldx, m_oldy);
                 g.drawLine(m_x, m_y, evt.x, evt.y);
                 m_oldx = evt.x;
                 m_oldy = evt.y;
                 break;
+                
             case Event.MOUSE_UP:
                 repaint();
-                float yb = m_img.getHeight(this);
-                float xb = m_img.getWidth(this);
+                float yb = m_img.getHeight();
+                float xb = m_img.getWidth();
                 float ys = size().height;
                 float xs = size().width;
                 float xb1 = xb * m_x / xs;

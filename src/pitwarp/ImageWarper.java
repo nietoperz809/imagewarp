@@ -81,10 +81,10 @@ public class ImageWarper
         SetPt(se, r.x, r.y + r.height);
         SetPt(sw, r.x + r.width, r.y + r.height);
         WarpRegion(r, nw, ne, sw, se);
-        return getImageFromArray (mToPixels, mWidth, mHeight);
+        return createImageFromArray (mToPixels, mWidth, mHeight);
     }
 
-    public static BufferedImage getImageFromArray(int[] pixels, int width, int height)
+    public static BufferedImage createImageFromArray(int[] pixels, int width, int height)
     {
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         image.setRGB(0, 0, width, height, pixels, 0, width);
