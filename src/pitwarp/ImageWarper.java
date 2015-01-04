@@ -34,6 +34,8 @@ public class ImageWarper
         mFromPixels = new int[mWidth * mHeight];
         mToPixels = new int[mWidth * mHeight];
         img.getRGB(0, 0, mWidth, mHeight, mFromPixels, 0, mWidth);
+        System.arraycopy(mFromPixels, 0, mToPixels, 0, mWidth * mHeight);
+
         int dx = mToPoint.x - mFromPoint.x;
         int dy = mToPoint.y - mFromPoint.y;
         int dist = (int) Math.sqrt(dx * dx + dy * dy) * 2;
@@ -43,7 +45,6 @@ public class ImageWarper
         Point se = new Point(0, 0);
         Point sw = new Point(0, 0);
         // copy mFromPixels to mToPixels, so the non-warped parts will be identical
-        //System.arraycopy(mFromPixels, 0, mToPixels, 0, mWidth * mHeight);
         if (dist == 0)
         {
             return null;
