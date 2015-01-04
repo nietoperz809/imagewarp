@@ -10,7 +10,6 @@ import java.awt.Event;
 import java.awt.FileDialog;
 import java.awt.Frame;
 import java.awt.GridLayout;
-import java.awt.Image;
 import java.awt.Label;
 import java.awt.Menu;
 import java.awt.MenuBar;
@@ -20,18 +19,16 @@ import java.awt.Window;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.imageio.ImageIO;
 
-public class WTest extends Frame
+public class WTest extends Frame implements Warpable
 {
     public static void main(String str[])
     {
         new WTest();
     }
 
-    ActionImage actionImage = new ActionImage();
+    ActionImage actionImage = new ActionImage(this);
     ImageView imageView = new ImageView();
     Toolkit toolkit = Toolkit.getDefaultToolkit();
 
@@ -62,25 +59,7 @@ public class WTest extends Frame
         {
             case Event.ACTION_EVENT:
             {
-                if (evt.target == actionImage && evt.arg == actionImage)
-                {
-                    Window wnd = new Window(this);
-                    wnd.setBackground(new Color(255, 100, 100));
-                    wnd.resize(50, 20);
-                    wnd.add("Center", new Label("Wait..."));
-                    wnd.show();
-
-                    ImageWarper warper = new ImageWarper();
-                    BufferedImage img = warper.WarpPixels(
-                            actionImage.m_img,
-                            new Point(evt.x, evt.y),
-                            new Point(evt.key, evt.modifiers));
-
-                    wnd.dispose();
-
-                    imageView.setImage(img);
-                }
-                else if (evt.arg.equals("Swap"))
+                if (evt.arg.equals("Swap"))
                 {
                     actionImage.swapImage(imageView);
                 }
@@ -110,5 +89,21 @@ public class WTest extends Frame
                 break;
         }
         return true;
+    }
+
+    @Override
+    public void doWarp(Point pt1, Point pt2)
+    {
+        Window wnd = new Window(this);
+        wnd.setBackground(new Color(255, 100, 100));
+        wnd.resize(50, 20);
+        wnd.add("Center", new Label("Wait..."));
+        wnd.show();
+
+        ImageWarper warper = new ImageWarper();
+        BufferedImage img2 = warper.WarpPixels (actionImage.m_img, pt1, pt2);
+
+        wnd.dispose();
+        imageView.setImage(img2);
     }
 }
