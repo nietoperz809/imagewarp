@@ -5,17 +5,12 @@
  */
 package pitwarp;
 
-import java.awt.Component;
-import java.awt.Image;
 import java.awt.Point;
 import java.awt.Rectangle;
-import java.awt.Toolkit;
-import java.awt.image.MemoryImageSource;
-import java.awt.image.PixelGrabber;
+import java.awt.image.BufferedImage;
 
 /////////////////////////////////////////////////////////////////////////
-
-class ImageWarper
+public class ImageWarper
 {
     Point mFromPoint;
     Point mToPoint;
@@ -23,55 +18,22 @@ class ImageWarper
     int[] mToPixels;
     int mWidth;
     int mHeight; // width & height of warp image
-    Component m_parent;
 
     ImageWarper()
     {
     }
 
     // warp mFromPixels into mToPixels
-    public Image WarpPixels(Component obs, Image img, Point fromPoint, Point toPoint)
+    public BufferedImage WarpPixels(BufferedImage img, Point fromPoint, Point toPoint)
     {
         mFromPoint = fromPoint;
         mToPoint = toPoint;
-        m_parent = obs;
-        while ((mWidth = img.getWidth(obs)) < 0)
-        {
-            try
-            {
-                Thread.sleep(10);
-            }
-            catch (InterruptedException e)
-            {
-            } // supposed to do this. oh well, it works.
-        }
-        while ((mHeight = img.getHeight(obs)) < 0)
-        {
-            try
-            {
-                Thread.sleep(10);
-            }
-            catch (InterruptedException e)
-            {
-            }
-        }
+        mWidth = img.getWidth(null);
+        mHeight = img.getHeight(null);
         // get the pixel data from the image
         mFromPixels = new int[mWidth * mHeight];
         mToPixels = new int[mWidth * mHeight];
-        PixelGrabber grabber = new PixelGrabber(img, 0, 0, mWidth, mHeight, mFromPixels, 0, mWidth);
-        boolean done = false;
-        do
-        {
-            // grab pixels for 500 msec
-            try
-            {
-                done = grabber.grabPixels(500);
-            }
-            catch (InterruptedException e)
-            {
-            }
-        }
-        while (!done);
+        img.getRGB(0, 0, mWidth, mHeight, mFromPixels, 0, mWidth);
         int dx = mToPoint.x - mFromPoint.x;
         int dy = mToPoint.y - mFromPoint.y;
         int dist = (int) Math.sqrt(dx * dx + dy * dy) * 2;
@@ -81,7 +43,7 @@ class ImageWarper
         Point se = new Point(0, 0);
         Point sw = new Point(0, 0);
         // copy mFromPixels to mToPixels, so the non-warped parts will be identical
-        System.arraycopy(mFromPixels, 0, mToPixels, 0, mWidth * mHeight);
+        //System.arraycopy(mFromPixels, 0, mToPixels, 0, mWidth * mHeight);
         if (dist == 0)
         {
             return null;
@@ -118,7 +80,14 @@ class ImageWarper
         SetPt(se, r.x, r.y + r.height);
         SetPt(sw, r.x + r.width, r.y + r.height);
         WarpRegion(r, nw, ne, sw, se);
-        return Toolkit.getDefaultToolkit().createImage(new MemoryImageSource(mWidth, mHeight, mToPixels, 0, mWidth));
+        return getImageFromArray (mToPixels, mWidth, mHeight);
+    }
+
+    public static BufferedImage getImageFromArray(int[] pixels, int width, int height)
+    {
+        BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
+        image.setRGB(0, 0, width, height, pixels, 0, width);
+        return image;
     }
 
     // warp a quadrilateral into a rectangle (magic!)
@@ -204,5 +173,5 @@ class ImageWarper
         pt.x = x;
         pt.y = y;
     }
-    
+
 }

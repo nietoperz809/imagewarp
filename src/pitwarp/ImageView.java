@@ -8,6 +8,7 @@ package pitwarp;
 import java.awt.Canvas;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 
 /**
  *
@@ -15,9 +16,9 @@ import java.awt.Image;
  */
 public class ImageView extends Canvas
 {
-    Image m_img = null;
+    BufferedImage m_img = null;
 
-    ImageView()
+    public ImageView()
     {
         super();
     }
@@ -42,7 +43,7 @@ public class ImageView extends Canvas
      *
      * @param img
      */
-    public void setImage(Image img)
+    public void setImage(BufferedImage img)
     {
         if (m_img != null)
         {
@@ -60,7 +61,7 @@ public class ImageView extends Canvas
     {
         if (iv != this)
         {
-            Image img1 = iv.m_img;
+            BufferedImage img1 = iv.m_img;
             iv.m_img = m_img;
             m_img = img1;
             iv.repaint();

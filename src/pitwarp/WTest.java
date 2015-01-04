@@ -17,6 +17,12 @@ import java.awt.MenuBar;
 import java.awt.Point;
 import java.awt.Toolkit;
 import java.awt.Window;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
 
 public class WTest extends Frame
 {
@@ -35,7 +41,6 @@ public class WTest extends Frame
         setMenuBar(createMenuBar());
         add(actionImage);
         add(imageView);
-        actionImage.setImage(toolkit.getImage("bump.gif"));
         resize(600, 300);
         show();
     }
@@ -49,7 +54,7 @@ public class WTest extends Frame
         bar.add(m);
         return bar;
     }
-    
+
     @Override
     public boolean handleEvent(Event evt)
     {
@@ -66,7 +71,7 @@ public class WTest extends Frame
                     wnd.show();
 
                     ImageWarper warper = new ImageWarper();
-                    Image img = warper.WarpPixels(this,
+                    BufferedImage img = warper.WarpPixels(
                             actionImage.m_img,
                             new Point(evt.x, evt.y),
                             new Point(evt.key, evt.modifiers));
@@ -85,8 +90,16 @@ public class WTest extends Frame
                     fd.show();
                     if (fd.getFile() != null)
                     {
-                        Image img = toolkit.getImage(fd.getDirectory() + fd.getFile());
-                        actionImage.setImage(img);
+                        File f = new File(fd.getDirectory() + fd.getFile());
+                        BufferedImage img;
+                        try
+                        {
+                            img = ImageIO.read(f);
+                            actionImage.setImage(img);
+                        }
+                        catch (IOException ex)
+                        {
+                        }
                     }
                 }
             }
