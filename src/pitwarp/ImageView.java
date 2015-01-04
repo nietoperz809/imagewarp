@@ -5,16 +5,15 @@
  */
 package pitwarp;
 
-import java.awt.Canvas;
 import java.awt.Graphics;
-import java.awt.Image;
 import java.awt.image.BufferedImage;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Administrator
  */
-public class ImageView extends Canvas
+public class ImageView extends JPanel
 {
     BufferedImage m_img = null;
 

@@ -8,7 +8,6 @@ package pitwarp;
 import java.awt.Color;
 import java.awt.Event;
 import java.awt.FileDialog;
-import java.awt.Frame;
 import java.awt.GridLayout;
 import java.awt.Label;
 import java.awt.Menu;
@@ -20,8 +19,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.JFrame;
 
-public class WTest extends Frame implements Warpable
+public class WTest extends JFrame implements Warpable
 {
     public static void main(String str[])
     {

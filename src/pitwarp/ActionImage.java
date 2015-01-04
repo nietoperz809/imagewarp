@@ -6,11 +6,13 @@
 package pitwarp;
 
 import java.awt.Color;
-import java.awt.Event;
 import java.awt.Graphics;
 import java.awt.Point;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 
-public class ActionImage extends ImageView
+public class ActionImage extends ImageView implements MouseListener, MouseMotionListener
 {
     Warpable target;
     int m_x;
@@ -23,43 +25,62 @@ public class ActionImage extends ImageView
     {
         super();
         target = w;
+        addMouseListener(this);
+        addMouseMotionListener (this);
     }
 
     @Override
-    public boolean handleEvent(Event evt)
+    public void mouseClicked(MouseEvent e)
+    {
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e)
+    {
+        m_x = e.getX();
+        m_y = e.getY();
+        m_oldx = m_x;
+        m_oldy = m_y;
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e)
+    {
+        repaint();
+        float yb = m_img.getHeight();
+        float xb = m_img.getWidth();
+        float ys = size().height;
+        float xs = size().width;
+        int xb1 = (int) (xb * m_x / xs);
+        int yb1 = (int) (yb * m_y / ys);
+        int xb2 = (int) (xb * e.getX() / xs);
+        int yb2 = (int) (yb * e.getY() / ys);
+        target.doWarp(new Point(xb2, yb2), new Point(xb1, yb1));
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e)
+    {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e)
+    {
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e)
     {
         Graphics g = getGraphics();
         g.setXORMode(m_xorcolor);
-        switch (evt.id)
-        {
-            case Event.MOUSE_DOWN:
-                m_x = evt.x;
-                m_y = evt.y;
-                m_oldx = m_x;
-                m_oldy = m_y;
-                break;
+        g.drawLine(m_x, m_y, m_oldx, m_oldy);
+        g.drawLine(m_x, m_y, e.getX(), e.getY());
+        m_oldx = e.getX();
+        m_oldy = e.getY();
+    }
 
-            case Event.MOUSE_DRAG:
-                g.drawLine(m_x, m_y, m_oldx, m_oldy);
-                g.drawLine(m_x, m_y, evt.x, evt.y);
-                m_oldx = evt.x;
-                m_oldy = evt.y;
-                break;
-
-            case Event.MOUSE_UP:
-                repaint();
-                float yb = m_img.getHeight();
-                float xb = m_img.getWidth();
-                float ys = size().height;
-                float xs = size().width;
-                int xb1 = (int)(xb * m_x / xs);
-                int yb1 = (int)(yb * m_y / ys);
-                int xb2 = (int)(xb * evt.x / xs);
-                int yb2 = (int)(yb * evt.y / ys);
-                //getParent().postEvent(new Event(this, 0, Event.ACTION_EVENT, (int) xb2, (int) yb2, (int) xb1, (int) yb1, this));
-                target.doWarp(new Point(xb2, yb2), new Point(xb1, yb1));
-                break;
-        }
-        return true;
+    @Override
+    public void mouseMoved(MouseEvent e)
+    {
     }
 }
